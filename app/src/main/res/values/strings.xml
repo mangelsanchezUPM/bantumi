@@ -55,8 +55,10 @@
     <string name="txtDialogoReiniciarAfirmativo">Sí</string>
     <string name="txtDialogoReiniciarNegativo">No</string>
 
+    <!-- Opciones guardar y cargar partida -->
+    <string name="txtExitoGuardarPartida">La partida se ha guardado con éxito.</string>
     <string name="txtErrorGuardarPartida">La partida no ha podido ser guardada.</string>
+    <string name="txtExitoRecuperarPartida">La partida ha sido cargada con éxito.</string>
     <string name="txtErrorRecuperarPartida">La partida no ha podido ser recuperada.</string>
-    <string name="txtErrorCargarPartida">La partida no ha podido ser cargada.</string>
 
 </resources>

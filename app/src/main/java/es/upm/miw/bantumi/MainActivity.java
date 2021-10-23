@@ -218,9 +218,12 @@ public class MainActivity extends AppCompatActivity {
                     openFileOutput(FICH_GUARDADO, Context.MODE_PRIVATE);
             fos.write(this.juegoBantumi.serializa().getBytes());
             fos.close();
+            Snackbar.make(findViewById(android.R.id.content),
+                    getString(R.string.txtExitoGuardarPartida),
+                    Snackbar.LENGTH_SHORT).show();
         } catch (IOException e) {
             Snackbar.make(findViewById(android.R.id.content),
-                    "Excepción al guardar la partida",
+                    getString(R.string.txtErrorGuardarPartida),
                     Snackbar.LENGTH_SHORT).show();
         }
     }
@@ -235,6 +238,9 @@ public class MainActivity extends AppCompatActivity {
             String partidaRecuperada = fich.readLine();
             fich.close();
             this.juegoBantumi.deserializa(partidaRecuperada);
+            Snackbar.make(findViewById(android.R.id.content),
+                    getString(R.string.txtExitoRecuperarPartida),
+                    Snackbar.LENGTH_SHORT).show();
         } catch (Exception e) {
             Snackbar.make(findViewById(android.R.id.content),
                     getString(R.string.txtErrorRecuperarPartida),
