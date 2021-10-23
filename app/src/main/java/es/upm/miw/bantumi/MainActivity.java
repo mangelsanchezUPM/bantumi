@@ -1,6 +1,7 @@
 package es.upm.miw.bantumi;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,12 +16,15 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Locale;
 
 import es.upm.miw.bantumi.model.BantumiViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String FICH_GUARDADO = "partidaGuardada";
     protected final String LOG_TAG = "MiW";
     JuegoBantumi juegoBantumi;
     BantumiViewModel bantumiVM;
@@ -91,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Muestra el valor <i>valor</i> en la posición <i>pos</i>
      *
-     * @param pos posición a actualizar
+     * @param pos   posición a actualizar
      * @param valor valor a mostrar
      */
     private void mostrarValor(int pos, int valor) {
@@ -115,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
 //            case R.id.opcAjustes: // @todo Preferencias
 //                startActivity(new Intent(this, BantumiPrefs.class));
 //                return true;
+            case R.id.opcGuardarPartida:
+                guardarPartida();
+                return true;
             case R.id.opcAcercaDe:
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.aboutTitle)
@@ -189,9 +196,26 @@ public class MainActivity extends AppCompatActivity {
                 texto,
                 Snackbar.LENGTH_LONG
         )
-        .show();
+                .show();
 
         // @TODO guardar puntuación
         new FinalAlertDialog().show(getSupportFragmentManager(), "ALERT_DIALOG");
+    }
+
+
+    /**
+     * Se guarda la partida al seleccionar la opción
+     */
+    private void guardarPartida() {
+        try {
+            FileOutputStream fos =
+                    openFileOutput(FICH_GUARDADO, Context.MODE_PRIVATE);
+            fos.write(this.juegoBantumi.serializa().getBytes());
+            fos.close();
+        } catch (IOException e) {
+            Snackbar.make(findViewById(android.R.id.content),
+                    "Excepción al guardar la partida",
+                    Snackbar.LENGTH_SHORT).show();
+        }
     }
 }

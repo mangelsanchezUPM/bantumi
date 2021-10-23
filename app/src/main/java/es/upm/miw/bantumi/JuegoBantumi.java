@@ -1,6 +1,11 @@
 package es.upm.miw.bantumi;
 
+import android.content.Context;
 import android.util.Log;
+import android.view.View;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import es.upm.miw.bantumi.model.BantumiViewModel;
 
@@ -24,10 +29,10 @@ public class JuegoBantumi {
 
     /**
      * Constructor
-     *
+     * <p>
      * Inicializa el modelo sólo si éste está vacío
      *
-     * @param turno especifica el turno inicial <code>[Turno.turnoJ1 || Turno.turnoJ2]</code>
+     * @param turno              especifica el turno inicial <code>[Turno.turnoJ1 || Turno.turnoJ2]</code>
      * @param numInicialSemillas Número de semillas al inicio del juego
      */
     public JuegoBantumi(BantumiViewModel bantumiVM, Turno turno, int numInicialSemillas) {
@@ -49,7 +54,7 @@ public class JuegoBantumi {
     /**
      * Asigna el número de semillas a una posición
      *
-     * @param pos posición
+     * @param pos   posición
      * @param valor número de semillas
      */
     public void setSemillas(int pos, int valor) {
@@ -107,7 +112,7 @@ public class JuegoBantumi {
         // Si acaba en hueco vacío en propio campo -> recoger propio + contrario
         if (getSemillas(nextPos) == 1
                 && ((turnoActual() == Turno.turnoJ1 && nextPos < 6)
-                    || (turnoActual() == Turno.turnoJ2 && nextPos > 6 && nextPos < 13))
+                || (turnoActual() == Turno.turnoJ2 && nextPos > 6 && nextPos < 13))
         ) {
             int posContrario = 12 - nextPos;
             Log.i("MiW", "\trecoger: turno=" + turnoActual() + ", pos=" + nextPos + ", contrario=" + posContrario);
@@ -192,8 +197,13 @@ public class JuegoBantumi {
      * @return juego serializado
      */
     public String serializa() {
-        // @TODO
-        return null;
+        Turno turnoActual = this.bantumiVM.getTurno().getValue();
+        StringBuilder partidaSerializada = new StringBuilder(turnoActual + ";");
+        for (int pos = 0; pos < NUM_POSICIONES; pos++) {
+            partidaSerializada.append(this.bantumiVM.getNumSemillas(pos).getValue());
+            if (pos < NUM_POSICIONES - 1) partidaSerializada.append(";");
+        }
+        return partidaSerializada.toString();
     }
 
     /**
