@@ -14,10 +14,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Locale;
 
 import es.upm.miw.bantumi.model.BantumiViewModel;
@@ -119,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
 //            case R.id.opcAjustes: // @todo Preferencias
 //                startActivity(new Intent(this, BantumiPrefs.class));
 //                return true;
+            case R.id.opcRecuperarPartida:
+                recuperarPartida();
+                return true;
             case R.id.opcGuardarPartida:
                 guardarPartida();
                 return true;
@@ -216,6 +222,23 @@ public class MainActivity extends AppCompatActivity {
             Snackbar.make(findViewById(android.R.id.content),
                     "Excepción al guardar la partida",
                     Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Lee la partida guardada en el fichero de guardado
+     */
+    private void recuperarPartida() {
+        try {
+            BufferedReader fich = new BufferedReader(
+                    new InputStreamReader(openFileInput(FICH_GUARDADO)));
+            String partidaRecuperada = fich.readLine();
+            fich.close();
+            this.juegoBantumi.deserializa(partidaRecuperada);
+        } catch (Exception e) {
+            Snackbar.make(findViewById(android.R.id.content),
+                    getString(R.string.txtErrorRecuperarPartida),
+                    BaseTransientBottomBar.LENGTH_SHORT).show();
         }
     }
 }
