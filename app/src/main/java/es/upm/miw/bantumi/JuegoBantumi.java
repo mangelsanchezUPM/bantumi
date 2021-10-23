@@ -211,7 +211,20 @@ public class JuegoBantumi {
      *
      * @param juegoSerializado cadena que representa el estado completo del juego
      */
-    public void deserializa(String juegoSerializado) {
-        // @TODO
+    public void deserializa(String juegoSerializado) throws Exception {
+        String[] juegoDeserializado = juegoSerializado.split(";");
+
+        if (juegoDeserializado.length != NUM_POSICIONES + 1)
+            throw new Exception();
+
+        String turnoActual = juegoDeserializado[0];
+        if (turnoActual.equals(Turno.turnoJ1.toString()))
+            this.bantumiVM.setTurno(Turno.turnoJ1);
+        else if (turnoActual.equals(Turno.turnoJ2.toString()))
+            this.bantumiVM.setTurno(Turno.turnoJ2);
+        else throw new Exception();
+
+        for (int pos = 0; pos < NUM_POSICIONES; pos++)
+            this.bantumiVM.setNumSemillas(pos, Integer.valueOf(juegoDeserializado[1 + pos]));
     }
 }
