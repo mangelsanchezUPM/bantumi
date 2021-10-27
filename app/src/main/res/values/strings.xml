@@ -62,4 +62,7 @@
     <string name="txtExitoRecuperarPartida">La partida ha sido cargada con éxito.</string>
     <string name="txtErrorRecuperarPartida">La partida no ha podido ser recuperada.</string>
 
+    <!-- Mejores resultados -->
+    <string name="txtTituloMejoresResultados">Mejores Resultados</string>
+    <string name="txtPuntuacionNoRegistrada">No hay puntuación registrada</string>
 </resources>

@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".BantumiPrefs">
         </activity>
+        <activity android:name=".MejoresPuntuacionesActivity">
+        </activity>
     </application>
 
 </manifest>

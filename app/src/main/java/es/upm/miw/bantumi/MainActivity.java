@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
@@ -70,21 +69,11 @@ public class MainActivity extends AppCompatActivity {
             int finalI = i;
             bantumiVM.getNumSemillas(i).observe(    // Huecos y almacenes
                     this,
-                    new Observer<Integer>() {
-                        @Override
-                        public void onChanged(Integer integer) {
-                            mostrarValor(finalI, juegoBantumi.getSemillas(finalI));
-                        }
-                    });
+                    integer -> mostrarValor(finalI, juegoBantumi.getSemillas(finalI)));
         }
         bantumiVM.getTurno().observe(   // Turno
                 this,
-                new Observer<JuegoBantumi.Turno>() {
-                    @Override
-                    public void onChanged(JuegoBantumi.Turno turno) {
-                        marcarTurno(juegoBantumi.turnoActual());
-                    }
-                }
+                turno -> marcarTurno(juegoBantumi.turnoActual())
         );
     }
 
@@ -136,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.opcAjustes:
-               startActivity(new Intent(this, BantumiPrefs.class));
-               return true;
+                startActivity(new Intent(this, BantumiPrefs.class));
+                return true;
             case R.id.opcRecuperarPartida:
                 recuperarPartida();
                 return true;
@@ -154,8 +143,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.opcReiniciarPartida:
                 new RestartAlertDialog().show(getSupportFragmentManager(), "ALERT_DIALOG");
                 return true;
-            // @TODO!!! resto opciones
-
+            case R.id.opcMejoresResultados:
+                Intent intent = new Intent(MainActivity.this, MejoresPuntuacionesActivity.class);
+                startActivity(intent);
             default:
                 Snackbar.make(
                         findViewById(android.R.id.content),
