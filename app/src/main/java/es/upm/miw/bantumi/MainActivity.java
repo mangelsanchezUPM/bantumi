@@ -27,6 +27,8 @@ import java.io.InputStreamReader;
 import java.util.Locale;
 
 import es.upm.miw.bantumi.model.BantumiViewModel;
+import es.upm.miw.bantumi.model.Puntuacion;
+import es.upm.miw.bantumi.model.PuntuacionViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     BantumiViewModel bantumiVM;
     int numInicialSemillas;
     String prefNombreJugador1;
+    PuntuacionViewModel puntuacionViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         // Instancia el ViewModel y el juego, y asigna observadores a los huecos
         numInicialSemillas = getResources().getInteger(R.integer.intNumInicialSemillas);
         bantumiVM = new ViewModelProvider(this).get(BantumiViewModel.class);
+        puntuacionViewModel = new ViewModelProvider(this).get(PuntuacionViewModel.class);
         juegoBantumi = new JuegoBantumi(bantumiVM, JuegoBantumi.Turno.turnoJ1, numInicialSemillas);
         crearObservadores();
     }
@@ -216,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
         )
                 .show();
 
-        // @TODO guardar puntuación
+        this.guardarPuntuacion();
         new FinalAlertDialog().show(getSupportFragmentManager(), "ALERT_DIALOG");
     }
 
@@ -258,5 +262,13 @@ public class MainActivity extends AppCompatActivity {
                     getString(R.string.txtErrorRecuperarPartida),
                     BaseTransientBottomBar.LENGTH_SHORT).show();
         }
+    }
+
+    /**
+     * Se guarda la puntuación del jugador
+     */
+    private void guardarPuntuacion() {
+        Puntuacion puntuacion = new Puntuacion(prefNombreJugador1, bantumiVM.getNumSemillas(6).getValue());
+        puntuacionViewModel.insert(puntuacion);
     }
 }
