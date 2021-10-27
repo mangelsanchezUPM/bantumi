@@ -19,8 +19,12 @@ public class PuntuacionViewModel extends AndroidViewModel {
         mAllPuntuaciones = mRepository.getAllPuntuaciones();
     }
 
-    public LiveData<List<Puntuacion>> getAllPuntuacions() {
+    public LiveData<List<Puntuacion>> getAllPuntuaciones() {
         return mAllPuntuaciones;
+    }
+
+    public LiveData<List<Puntuacion>> getMejoresPuntuaciones() {
+        return mRepository.getMejoresPuntuaciones();
     }
 
     public void insert(Puntuacion puntuacion) {

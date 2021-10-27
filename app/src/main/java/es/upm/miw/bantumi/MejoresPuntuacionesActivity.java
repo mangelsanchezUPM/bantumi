@@ -21,7 +21,7 @@ public class MejoresPuntuacionesActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         puntuacionViewModel = new ViewModelProvider(this).get(PuntuacionViewModel.class);
-        puntuacionViewModel.getAllPuntuacions().observe(this, puntuaciones -> adapter.setPuntuaciones(puntuaciones));
+        puntuacionViewModel.getMejoresPuntuaciones().observe(this, adapter::setPuntuaciones);
     }
 
 }

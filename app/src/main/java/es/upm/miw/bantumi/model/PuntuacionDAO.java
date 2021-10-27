@@ -14,6 +14,9 @@ public interface PuntuacionDAO {
     @Query("SELECT * FROM " + Puntuacion.TABLA)
     LiveData<List<Puntuacion>> getAll();
 
+    @Query("SELECT * FROM " + Puntuacion.TABLA + " ORDER BY MAX(puntuacionJugador, puntuacionCPU) DESC LIMIT 10")
+    LiveData<List<Puntuacion>> getMejoresPuntuaciones();
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     long insert(Puntuacion puntuacion);
 
