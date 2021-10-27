@@ -268,7 +268,9 @@ public class MainActivity extends AppCompatActivity {
      * Se guarda la puntuación del jugador
      */
     private void guardarPuntuacion() {
-        Puntuacion puntuacion = new Puntuacion(prefNombreJugador1, bantumiVM.getNumSemillas(6).getValue());
+        Puntuacion puntuacion = new Puntuacion(prefNombreJugador1,
+                bantumiVM.getNumSemillas(6).getValue(),
+                bantumiVM.getNumSemillas(13).getValue());
         puntuacionViewModel.insert(puntuacion);
     }
 }
