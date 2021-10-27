@@ -6,12 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(entities = {Puntuacion.class}, version = 1, exportSchema = false)
+@TypeConverters({Converters.class})
 public abstract class PuntuacionRoomDatabase extends RoomDatabase {
 
     public static final String BASE_DATOS = Puntuacion.TABLA + ".db";
@@ -50,13 +52,10 @@ public abstract class PuntuacionRoomDatabase extends RoomDatabase {
 
                     // If you want to keep data through app restarts,
                     // comment out the following block
-                    databaseWriteExecutor.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            // Populate the database in the background.
-                            // If you want to start with more groups, just add them.
-                            PuntuacionDAO dao = INSTANCE.puntuacionDAO();
-                        }
+                    databaseWriteExecutor.execute(() -> {
+                        // Populate the database in the background.
+                        // If you want to start with more groups, just add them.
+                        PuntuacionDAO dao = INSTANCE.puntuacionDAO();
                     });
                 }
             };
