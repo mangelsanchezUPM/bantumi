@@ -25,6 +25,10 @@ public class PuntuacionRepository {
         return mPuntuaciones;
     }
 
+    public LiveData<List<Puntuacion>> getMejoresPuntuaciones() {
+        return mPuntuacionDao.getMejoresPuntuaciones();
+    }
+
     public long insert(Puntuacion puntuacion) {
         return mPuntuacionDao.insert(puntuacion);
     }
